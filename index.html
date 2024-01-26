@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="航空写真と陰影起伏図を重ねて表示すると、前方後円墳の姿が浮かび上がります。古墳時代前後の史跡マップも兼ねています。古墳上でクリックすると東京ドームの大きさと比較できます。">
+  <meta name="theme-color" content="#C4DFE6">
+  <meta name="thumbnail" content="https://kiritter.github.io/kofunmap/thumbnails/thmb-256x256.png">
+  <meta property="og:title" content="陰影起伏図で見る古墳マップ">
+  <meta property="og:description" content="航空写真と陰影起伏図を重ねて表示すると、前方後円墳の姿が浮かび上がります。古墳時代前後の史跡マップも兼ねています。古墳上でクリックすると東京ドームの大きさと比較できます。">
+  <meta property="og:url" content="https://kiritter.github.io/kofunmap/">
+  <meta property="og:image" content="https://kiritter.github.io/kofunmap/thumbnails/thmb-192x192.png">
+  <meta name="twitter:card" content="summary">
+  <title>陰影起伏図で見る古墳マップ</title>
+  <base href="/kofunmap/">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" type="image/png" href="icons/apple-touch-icon-180x180.png">
+  <link rel="stylesheet" href="css/vendor/leaflet_v1.9.4/leaflet.css">
+  <link rel="stylesheet" href="css/app/index.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B25L64G43V"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host === '127.0.0.1' || host === 'localhost') {
+      gtag = console.debug;
+    }else{
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B25L64G43V');
+    }
+  </script>
+</head>
+
+<body class="js-body">
+  <div class="my-header">
+    <span class="map-reload"><a class="map-reload-anchor" href="./" target="_self"><img class="map-reload-img" src="images/reload_48px.png" width="18" alt="Reload this page"></a></span>
+    <span class="map-title"><span class="map-title-part">陰影起伏図で見る</span>古墳マップ</span>
+    <span class="recommend-place">
+      <span class="recommend-place-note">兼 古代史関連マップ</span>
+      <input type="button" class="recommend-place-show-btn js-recommend-place-show-btn" value="主な古墳">
+    </span>
+    <span class="advanced">
+      <input type="button" class="advanced-show-btn js-advanced-show-btn" value="Advanced機能">
+    </span>
+    <span class="about">
+      <a href="html/about.html" target="_blank">About</a>
+    </span>
+  </div>
+
+  <div class="my-body">
+
+    <div class="map-area">
+      <div class="map-left-wrap js-map-left-wrap">
+        <div id="map-left" class="js-map-left"></div>
+      </div>
+    </div>
+
+    <div class="current-zoom-level">
+      <span>Zoom [<span class="js-current-zoom-level"></span>]</span>
+    </div>
+
+    <div class="click-remarks-area">
+      <div>
+        <div class="click-remarks-note">地図上でクリックすると<br>距離を示す同心円が表示されます</div>
+      </div>
+    </div>
+
+    <div class="copy-as-url-area">
+      <div>
+        <div class="copy-as-url-note">メモやシェアにご利用ください。<br>現在の場所をURLとしてコピー</div>
+      </div>
+      <div>
+        <div><input type="button" class="copy-as-url-btn js-copy-as-url-btn" value="クリップボードにコピー"></div>
+        <div><label class="copy-as-url-chk-lbl"><input type="checkbox" class="copy-as-url-chk js-copy-as-url-chk" checked>同心円の座標も含める</label></div>
+        <div class="copy-as-url-message js-copy-as-url-message"></div>
+        <div class="copy-as-url-btn-note"></div>
+      </div>
+    </div>
+
+    <div class="sea-surface-area js-sea-surface-area">
+      <div>
+        <span class="sea-surface-input-area">海面: 現在の <input type="number" class="sea-surface-input js-sea-surface-input" value="" min="0" max="30" step="0.1"> m上として</span>
+        <span><input type="button" class="sea-surface-btn js-sea-surface-btn" value="再描画"></span>
+      </div>
+      <div>
+        <div class="sea-surface-note2">※あくまで<a href="https://maps.gsi.go.jp/development/ichiran.html#dem" target="_blank">標高タイルデータ(DEM5A)</a>を元に描画しているだけのため、<br>　正確なシミュレーションではありません。<br>　(※データ自体がない海岸線もあります)<br>　過去当時とは地形自体も異なるため、大体の様子としてご覧ください。</div>
+      </div>
+    </div>
+
+    <div class="latlng-info-area latlng-info-area-left js-latlng-info-area js-latlng-info-area-left">
+      <div class="search-latlng-area">
+        <div>
+          <span>緯度,経度：<input type="text" class="search-latlng-input js-search-latlng-input" value="" placeholder="Search"></span>
+        </div>
+      </div>
+      <div class="show-latlng-area">
+        <div>
+          <div>緯度,経度：<span class="show-latlng-label js-show-latlng-label"></span></div>
+          <div>経度,緯度：<span class="show-lnglat-label js-show-lnglat-label"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recommend-place-area js-recommend-place-area">
+      <div class="recommend-place-header js-recommend-place-header">
+        <div class="recommend-place-header-note">※右下のマークのドラッグで<br>　ボックス全体を伸縮可能</div>
+        <div class="recommend-place-header-close"><input type="button" class="recommend-place-close-btn js-recommend-place-close-btn" value="閉じる"></div>
+      </div>
+      <div class="recommend-place-body">
+        <div class="recommend-place-note">各地域の代表的な古墳をピックアップ</div>
+        <div class="recommend-place-list js-recommend-place-list"></div>
+      </div>
+    </div>
+
+    <div class="permanent-cache-area js-permanent-cache-area">
+      <div class="permanent-cache-header js-permanent-cache-header">
+        <div class="permanent-cache-header-title">Advanced機能</div>
+        <div class="permanent-cache-header-close"><input type="button" class="permanent-cache-close-btn js-permanent-cache-close-btn" value="閉じる"></div>
+      </div>
+      <div class="permanent-cache-body js-permanent-cache-body">
+      </div>
+    </div>
+
+    <div class="message-area js-message-area">
+    </div>
+
+  </div>
+
+  <script src="js/vendor/leaflet_v1.9.4/leaflet.js"></script>
+  <script src="js/vendor/leaflet-tilelayer-colorizr-modified.js"></script>
+  <script src="js/vendor/leaflet.geometryutil.js"></script>
+  <script src="js/vendor/localforage.min.js"></script>
+
+  <script src="js/app/extends/L.Control.Layers.WithClose.js"></script>
+  <script src="js/app/extends/L.GridLayer.OldEditionMap.js"></script>
+  <script src="js/app/extends/L.GridLayer.OldEditionMap.Cache.js"></script>
+  <script src="js/app/extends/L.GridLayer.TileCanvas.js"></script>
+  <script src="js/app/extends/L.GridLayer.TileCanvas.Cache.js"></script>
+  <script src="js/app/extends/L.LayerGroupWithAdding.js"></script>
+  <script src="js/app/extends/L.TileLayer.Colorizr.Cache.js"></script>
+
+  <script src="js/app/errors/global_error_handler.js"></script>
+  <script src="js/app/states/Ga4Channel.js"></script>
+  <script src="js/app/states/Ga4Repo.js"></script>
+  <script src="js/app/states/global_const.js"></script>
+  <script src="js/app/states/global_state.js"></script>
+  <script src="js/app/states/global_statex_indexeddb_api_detector.js"></script>
+  <script src="js/app/states/GlobalCacheRepo.js"></script>
+  <script src="js/app/states/MyChannel.js"></script>
+  <script src="js/app/states/OldEditionMapIdCacheRepo.js"></script>
+  <script src="js/app/states/OldEditionMapIdLocalRepo.js"></script>
+  <script src="js/app/states/OldEditionMapIdRepo.js"></script>
+  <script src="js/app/states/PermanentCacheStatusRepo.js"></script>
+  <script src="js/app/states/UrlQueryParamRepo.js"></script>
+  <script src="js/app/states/UrlRepo.js"></script>
+  <script src="js/app/utils/UtilCalcForTile.js"></script>
+  <script src="js/app/utils/UtilCircle.js"></script>
+  <script src="js/app/utils/UtilDeepFreeze.js"></script>
+  <script src="js/app/utils/UtilLeafletTooltip.js"></script>
+  <script src="js/app/utils/UtilMap.js"></script>
+  <script src="js/app/utils/UtilMessage.js"></script>
+  <script src="js/app/utils/UtilMobileDetector.js"></script>
+  <script src="js/app/utils/UtilNumber.js"></script>
+  <script src="js/app/utils/UtilSleep.js"></script>
+  <script src="js/app/configs/config_circle.js"></script>
+  <script src="js/app/configs/config_map.js"></script>
+  <script src="js/app/configs/config_map_dem_function.js"></script>
+  <script src="js/app/configs/config_old_edition_map.js"></script>
+  <script src="js/app/managers/MapManager.js"></script>
+  <script src="js/app/managers/PermanentCacheManager.js"></script>
+  <script src="js/app/managers/PrefectureBorderManager.js"></script>
+  <script src="js/app/managers/RoutelineManager.js"></script>
+  <script src="js/app/managers/SeaSurfaceManager.js"></script>
+  <script src="js/app/managers/clickManagers/ClickManager.js"></script>
+  <script src="js/app/managers/clickManagers/ClickManagerCore.js"></script>
+  <script src="js/app/managers/clickManagers/DistanceCircleFactory.js"></script>
+  <script src="js/app/managers/clickManagers/DistanceCircleInfoProvider.js"></script>
+  <script src="js/app/managers/dialogs/AdvancedDialogManager.js"></script>
+  <script src="js/app/managers/dialogs/RecommendDialogManager.js"></script>
+  <script src="js/app/managers/dragHandlers/AdvancedDialogDragHandler.js"></script>
+  <script src="js/app/managers/dragHandlers/DialogHelper.js"></script>
+  <script src="js/app/managers/dragHandlers/DragHandlerCore.js"></script>
+  <script src="js/app/managers/dragHandlers/RecommendDialogDragHandler.js"></script>
+  <script src="js/app/managers/recommendMarkerManagers/MarkerRecommend100MeizanManager.js"></script>
+  <script src="js/app/managers/recommendMarkerManagers/MarkerRecommendCoreManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerCoreManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerDescManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerKofunManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerLandmarkManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerMuseumManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerNearbyManager.js"></script>
+  <script src="js/app/managers/markerManagers/MarkerShrineManager.js"></script>
+  <script src="js/app/managers/polygonManagers/EachPolygonManager.js"></script>
+  <script src="js/app/managers/polygonManagers/PolygonCoreManager.js"></script>
+  <script src="js/app/managers/searchManagers/SearchLatLngManager.js"></script>
+  <script src="js/app/managers/searchManagers/SearchLatLngManagerCore.js"></script>
+  <script src="js/app/managers/urlManagers/InitialSetViewManager.js"></script>
+  <script src="js/app/managers/urlManagers/UrlCopyManager.js"></script>
+  <script src="js/app/managers/urlManagers/UrlNormalizer.js"></script>
+  <script src="js/app/managers/urlManagers/UrlValidator.js"></script>
+  <script src="js/app/index.js"></script>
+
+</body>
+</html>

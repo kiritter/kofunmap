@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="「陰影起伏図で見る古墳マップ」の「永続的キャッシュ機能の説明」ページです。">
+  <meta name="theme-color" content="#C4DFE6">
+  <title>永続的キャッシュ機能の説明 | 陰影起伏図で見る古墳マップ</title>
+  <base href="/kofunmap/">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" type="image/png" href="icons/apple-touch-icon-180x180.png">
+  <link rel="stylesheet" href="css/app/readme_cache.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B25L64G43V"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host === '127.0.0.1' || host === 'localhost') {
+      gtag = console.debug;
+    }else{
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B25L64G43V');
+    }
+  </script>
+</head>
+<body>
+  <div class="head">
+    <div class="title">永続的キャッシュ機能の説明</div>
+  </div>
+
+  <div class="body">
+    <div class="section">
+      <div class="title">はじめに</div>
+      <div class="content">
+        <div class="paragraph">
+          <div>常に有用ではないのですが、役立つ場面もあるため、割り切り機能として設けています。</div>
+          <div>地図画像を一度取得したら、それをブラウザーのローカル環境(IndexedDB)に保存し、以降はそれを使い続ける、という機能です。</div>
+        </div>
+        <div class="paragraph">
+          <div>ブラウザを閉じても消えません。自分で削除するまで、ずっと残り続けます。</div>
+          <div>（ただし、一部環境では、ベストエフォート方式(自動で削除される)といったこともあるようです）</div>
+        </div>
+        <div class="paragraph">
+          <div>保存するデータが画像のため、後述のようにディスク容量をあっという間に費やしますが、</div>
+          <div>同じ地域のみを繰り返し見るような場面や、人に見せたい場所だけ事前にキャッシュしておくといった場面で便利です。</div>
+        </div>
+        <div class="paragraph">
+          <div>どのくらいの容量がキャッシュとして利用可能かは、利用環境に依存します。</div>
+          <div>ディスク容量が十分大きい、PCでの利用を想定しています。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title">機能を有効にする方法</div>
+      <div class="content">
+        <div class="paragraph">
+          <div>Dialog上に下記２つのボタンを用意しています。</div>
+          <div>・「旧版地図でのみ有効にする」（旧版地図の画像のみをキャッシュする）</div>
+          <div>・「すべての地図で有効にする」（すべての地図画像をキャッシュする）</div>
+          <div>(※古いブラウザ環境でIndexedDB機能自体が存在しない場合は、ボタンの代わりにその旨を表示します)</div>
+        </div>
+        <div class="paragraph">
+          <div>※旧版地図のみ別サイトから取得しており、相対的に取得速度が遅いため、</div>
+          <div>　旧版地図をよく見る方は、これのみをキャッシュする使い方が便利です。</div>
+        </div>
+        <div class="paragraph">
+          <div>ボタンをクリックすると、機能が有効になった状態で画面が再表示されます。</div>
+          <div>以降、対象の地図画像がキャッシュされます。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title">現在のキャッシュサイズを見る方法</div>
+      <div class="content">
+        <div class="paragraph">
+          <div>PCのChrome/Edgeにおいては、デベロッパーツールから確認できます。(2023年11月時点)</div>
+          <div>F12キーを押す、またはブラウザのメニューから「デベロッパーツール」を選択して表示。</div>
+        </div>
+        <div class="paragraph">
+          <div>デベロッパーツールの上部の「Application」タブを選択。</div>
+          <div>左側メニューの、Applicationセクション内、「Storage」を選択すると、</div>
+          <div>円グラフで、現在利用中のサイズが表示されます。</div>
+        </div>
+        <div class="paragraph">
+          <div>Android/iPad等のタブレットではデベロッパーツールが使えないため、</div>
+          <div>大体の目安として、Dialog下部に、現Origin配下の総合計量を表示しています。</div>
+          <div>(※一部のAndroidスマホ/タブレットで動作を確認しましたが、iOS系デバイスは未確認です)</div>
+        </div>
+        <div class="paragraph highlight">
+          <div>ひとつの地域を拡大していろいろ見るだけで、すぐに500MB～1GBになります。</div>
+          <div>また、残念なことに、数GB～10GB程度キャッシュすると、</div>
+          <div>キャッシュから画像を取り出して復元する処理自体が非常に遅くなり、その結果、画面表示が非常に遅くなります。</div>
+          <div>その状態になってしまうと、一度すべてクリアするしかありません。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="title">キャッシュをクリアする方法</div>
+      <div class="content">
+        <div class="paragraph">
+          <div>キャッシュ機能を有効にすると、Dialog上に表示されるボタンが変わり、「無効に戻す」ボタンが表示されます。</div>
+          <div>それをクリックするか、</div>
+          <div>または、前述のデベロッパーツールにて、円グラフの下にある「Clear site data」ボタンをクリックすることで、</div>
+          <div>保存データをすべて削除できます。</div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="section">
+      <div class="title">特記事項</div>
+      <div class="content">
+        <div class="paragraph">
+          <div>キャッシュ機能を有効にすると、地図画像を描画する処理が若干変わります。</div>
+          <div>その影響で、ズームイン/ズームアウトして、画像を入れ替える場面で、描画がチラつきます。</div>
+        </div>
+        <div class="paragraph">
+          <div>無効時は、画像がぼやけて、徐々にキレイになっていくという見栄えですが、</div>
+          <div>有効時は、一旦すべて消えた後で、遅れて画像が表示される、といった動きに変わるため、</div>
+          <div>描画がチラつく見栄えになります。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goto-top-section">
+      <div class="goto-top">
+        <span><a href="./" target="_self">『陰影起伏図で見る古墳マップ』Topへ移動</a></span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
