@@ -346,7 +346,7 @@ body {
   border: solid 1px #000;
   width: 337px;
   min-width: 135px;
-  max-width: 60vw;
+  max-width: 80vw;
   height: 75vh;
   max-height: 85vh;
   resize: both;
@@ -451,7 +451,7 @@ body {
   border: solid 1px #000;
   width: 400px;
   min-width: 135px;
-  max-width: 60vw;
+  max-width: 80vw;
   height: 470px;
   max-height: 85vh;
   resize: both;

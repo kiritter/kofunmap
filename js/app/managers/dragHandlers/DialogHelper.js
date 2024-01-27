@@ -20,7 +20,8 @@
             var newTop = currentTop + diffY;
 
             var bufferLeft = 10;
-            if ((bufferLeft <= newLeft) && (newLeft <= bodyWidth - bufferRight)) {
+            var limitLeft = ((bodyWidth - bufferRight) < 0) ? (bodyWidth * 0.2) : (bodyWidth - bufferRight);
+            if ((bufferLeft <= newLeft) && (newLeft <= limitLeft)) {
                 coreObj.prevPageX = event.pageX;
                 movingTargetEl.style.left = (currentLeft + diffX) + 'px';
             }
