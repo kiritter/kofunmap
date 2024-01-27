@@ -21,7 +21,7 @@ async function initMyApp(global) {
     var seaSurfaceManager = new MyApp.SeaSurfaceManager(gaChannel, mapBoth, MyApp.globalState);
     seaSurfaceManager.init();
 
-    var prefBorderManager = new MyApp.PrefectureBorderManager(mapBoth, MyApp.globalState, myChannel);
+    var prefBorderManager = new MyApp.PrefectureBorderManager(gaChannel, mapBoth, MyApp.globalState, myChannel);
     prefBorderManager.init();
 
     var markerRecommend100MeizanManager = new MyApp.MarkerRecommend100MeizanManager(gaChannel, mapBoth);

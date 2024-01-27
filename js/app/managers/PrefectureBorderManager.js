@@ -2,11 +2,12 @@
     var MyApp = global.MyApp = global.MyApp || {};
 
     MyApp.PrefectureBorderManager = class PrefectureBorderManager {
-        constructor(mapBoth, globalState, myChannel) {
+        constructor(gaChannel, mapBoth, globalState, myChannel) {
             this.globalState = globalState;
             this.myChannel = myChannel;
 
-            this.allManager = new MyApp.EachPolygonManager(mapBoth, globalState, 'pref_border', 'geojson/11_prefecture_borders/prefectures.geojson');
+            var isLazyLoad = true;
+            this.allManager = new MyApp.EachPolygonManager(gaChannel, mapBoth, globalState, 'pref_border', 'geojson/11_prefecture_borders/prefectures.geojson', isLazyLoad);
         }
 
         async init() {

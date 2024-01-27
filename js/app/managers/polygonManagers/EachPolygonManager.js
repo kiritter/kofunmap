@@ -2,10 +2,12 @@
     var MyApp = global.MyApp = global.MyApp || {};
 
     MyApp.EachPolygonManager = class EachPolygonManager {
-        constructor(mapBoth, globalState, layerName, url) {
+        constructor(gaChannel, mapBoth, globalState, layerName, url, isLazyLoad) {
+            this.gaChannel = gaChannel;
             this.mapBoth = mapBoth;
             this.globalState = globalState;
             this.layerName = layerName;
+            this.isLazyLoad = isLazyLoad;
             this.callbacks = {};
             this.options = {
                 geometryType: 'MultiPolygon',
@@ -31,7 +33,7 @@
         }
         _createCoreManager(targetTimeRangeType, targetUrl) {
             var layerName = this.layerName;
-            var coreManager = new MyApp.PolygonCoreManager(this.mapBoth, this.globalState, layerName, this.callbacks, this.options, targetTimeRangeType, targetUrl);
+            var coreManager = new MyApp.PolygonCoreManager(this.gaChannel, this.mapBoth, this.globalState, layerName, this.callbacks, this.options, targetTimeRangeType, targetUrl, this.isLazyLoad);
             return coreManager;
         }
 
