@@ -200,7 +200,7 @@
             },
         },
         'pref_border': {
-            caption: '都道府県境 (細部簡略/2014年時点)',
+            caption: '都道府県境 (細部簡略, 2014年時点)',
             tileType: MyApp.configMap.TileType.Empty,
             options: {
                 minZoom: 5,
