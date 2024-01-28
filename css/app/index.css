@@ -155,6 +155,7 @@ body {
 }
 .leaflet-control-layers-list .block-description-pref-border {
   color: #999;
+  margin-left: 7px;
 }
 .leaflet-control-layers-list .after-note {
   font-size: 11px;

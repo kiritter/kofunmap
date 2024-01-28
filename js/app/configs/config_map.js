@@ -200,13 +200,13 @@
             },
         },
         'pref_border': {
-            caption: '都道府県境 (※3.7MB, 目安精度, 2014年時点)',
+            caption: '都道府県境 (細部簡略/2014年時点)',
             tileType: MyApp.configMap.TileType.Empty,
             options: {
                 minZoom: 5,
                 maxZoom: 18,
                 myLayerName: 'pref_border',
-                blockDescription: '　↓ 初回選択時にデータ取得＆描画します',
+                blockDescription: '↓ 初回選択時にデータ取得＆描画(転送量1.2MB)',
                 blockDescriptionCssClassName: 'block-description-pref-border',
             },
         },
