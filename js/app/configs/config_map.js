@@ -2,6 +2,8 @@
     var MyApp = global.MyApp = global.MyApp || {};
     MyApp.configMap = {};
 
+    MyApp.configMap._myControlLayerMenuHeightBuffer = 90;
+
     MyApp.configMap.TileType = {
         Empty: 1,
         Standard: 2,

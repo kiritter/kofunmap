@@ -276,7 +276,7 @@ body {
 .sea-surface-area {
   display: none;
   position: absolute;
-  bottom: 95px;
+  bottom: 92px;
   left: 10px;
   z-index: 9901;
   background-color: #FFF;
@@ -285,11 +285,6 @@ body {
   border: 2px solid rgba(0,0,0,0.2);
   background-clip: padding-box;
   user-select: none;
-}
-@media (max-width: 1024px) {
-  .sea-surface-note2 {
-    display: none;
-  }
 }
 .sea-surface-note {
   font-size: 11px;
@@ -308,6 +303,11 @@ body {
 .sea-surface-note2 {
   margin-top: 10px;
   font-size: 10px;
+}
+@media (max-width: 1024px) {
+  .sea-surface-note2 {
+    display: none;
+  }
 }
 
 .latlng-info-area {
