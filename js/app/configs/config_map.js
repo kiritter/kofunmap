@@ -194,7 +194,7 @@
                     },
                     {
                         sourceSummaryUrl: '../#product-map',
-                        sourceSummaryText: '当Webサイトの🗾兄弟地図サイトを見る',
+                        sourceSummaryText: '当Webサイトの✨兄弟地図サイト✨を見る',
                         sourceSummaryNote: '',
                         sourceSummaryCssClassName: 'source-summary-link',
                     },
